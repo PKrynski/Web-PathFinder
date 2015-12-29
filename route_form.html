@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">   
+    <title>Formularz</title>
+  </head>
+
+  <body>
+  
+    <div class="container">	
+	  <h1>Wylicz trasę:</h1>
+	</div>
+	
+	<div class="container">
+	
+	  <form action="http://127.0.0.1:5000/krynskip/nav/routes" method="GET" enctype="multipart/form-data" id="register-form">
+
+		<table>
+		  <tr>
+			<td><label for="start">Początek:</label></td>
+			<td><input type="text" id="start" name="from"></td>
+		  </tr>
+		  <tr>
+			<td><label for="end">Koniec:</label></td>
+			<td><input type="text" id="end" name="to"></td>
+		  </tr>
+	    </table>
+	  </form>
+
+
+        <button type="submit" form="register-form" value="sub">Wyślij</button>
+
+		
+	</div>
+	
+  </body>
+</html>
