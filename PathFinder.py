@@ -69,24 +69,26 @@ def getShortestPath(the_map, start, destination):
 
     return list(full_path), visited[destination]
 
+'''
 if __name__ == '__main__':
     my_map = WorldMap()
 
-    city_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+    cities = ['WAW', 'PNO', 'KRK', 'GDN', 'POZ', 'SZZ', 'KTW']
 
-    for city in city_list:
+    for city in cities:
         my_map.add_city(city)
 
-    my_map.add_path('A', 'B', 22)
-    my_map.add_path('A', 'C', 24)
-    my_map.add_path('B', 'D', 13)
-    my_map.add_path('C', 'D', 39)
-    my_map.add_path('B', 'E', 48)
-    my_map.add_path('D', 'E', 27)
-    my_map.add_path('E', 'F', 5)
-    my_map.add_path('F', 'G', 2)
+    my_map.add_path('WAW', 'PNO', 22)
+    my_map.add_path('WAW', 'KRK', 24)
+    my_map.add_path('PNO', 'GDN', 13)
+    my_map.add_path('KRK', 'GDN', 39)
+    my_map.add_path('PNO', 'POZ', 48)
+    my_map.add_path('GDN', 'POZ', 27)
+    my_map.add_path('POZ', 'SZZ', 5)
+    my_map.add_path('SZZ', 'KTW', 2)
 
-    best_path, weight = getShortestPath(my_map, "G", "A")
+    best_path, weight = getShortestPath(my_map, "KTW", "WAW")
 
     print "Najlepsza droga: ", best_path
     print "Waga połączenia: %d" % weight
+'''

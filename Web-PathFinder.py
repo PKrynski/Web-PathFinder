@@ -3,6 +3,7 @@ from collections import defaultdict, deque
 from flask import Flask, render_template, request, abort, make_response
 from uuid import uuid4
 import json
+from PathFinder import WorldMap, getShortestPath
 
 app_url = '/krynskip/nav'
 app = Flask(__name__)
@@ -26,77 +27,6 @@ cities = [
 
 routes = []
 
-#begin pathfinder code
-
-class WorldMap(object):
-    def __init__(self):
-        self.cities = set()
-        self.neighbours = defaultdict(list)
-        self.distances = {}
-
-    def add_city(self, value):
-        self.cities.add(value)
-
-    def add_path(self, from_city, to_city, distance):
-        self.neighbours[from_city].append(to_city)
-        self.neighbours[to_city].append(from_city)  # for two-way city connections
-        self.distances[(from_city, to_city)] = distance
-        self.distances[(to_city, from_city)] = distance  # for two-way city connections
-
-
-def calculatePaths(map_data, start):
-    visited = {start: 0}
-    path = {}
-
-    cities = set(map_data.cities)
-
-    while cities:
-        previous = None
-        for city in cities:
-            if city in visited:
-                if previous is None:
-                    previous = city
-                elif visited[city] < visited[previous]:
-                    previous = city
-        if previous is None:
-            break
-
-        cities.remove(previous)
-        current_weight = visited[previous]
-
-        for current_city in map_data.neighbours[previous]:
-            try:
-                weight = current_weight + map_data.distances[(previous, current_city)]
-            except KeyError:
-                continue  # no connection -> check next city
-
-            if current_city not in visited or weight < visited[current_city]:
-                visited[current_city] = weight
-                path[current_city] = previous
-
-    return visited, path
-
-
-def getShortestPath(the_map, start, destination):
-    visited, paths = calculatePaths(the_map, start)
-    full_path = deque()
-
-    try:
-        current_target = paths[destination]
-    except KeyError:
-        print "Taka droga nie istnieje!"
-        return
-
-    while current_target != start:
-        full_path.appendleft(current_target)
-        current_target = paths[current_target]
-
-    full_path.appendleft(start)
-    full_path.append(destination)
-
-    return list(full_path), visited[destination]
-
-#end pathfinder code
 
 @app.route('/')
 def hello_world():
@@ -147,7 +77,12 @@ def create_new_route():
 
     if request.method == 'POST':
 
+        print "METHOD POST"
+
         data = request.get_data()
+
+        print data
+
         try:
             arguments = json.loads(data)
             if arguments.get('from') is None:
