@@ -4,7 +4,7 @@ from uuid import uuid4
 import json
 from PathFinder import WorldMap, getShortestPath
 
-app_url = '/krynskip/nav'
+app_url = '/krynskip/web-pathfinder'
 app = Flask(__name__)
 
 # Odkomentuj, jeśli potrzebujesz debuggera
@@ -24,12 +24,33 @@ cities = [
     {'id': 'KTW', 'name': 'Katowice'},
 ]
 
+my_map = WorldMap()
+for city in cities:
+    for key in city:
+        if key == "id":
+            print city[key]
+            my_map.add_city(city[key])
+
+# for city in cities:
+#    my_map.add_city(city)
+
+my_map.add_path('WAW', 'PNO', 22)
+my_map.add_path('WAW', 'KRK', 24)
+my_map.add_path('PNO', 'GDN', 13)
+my_map.add_path('KRK', 'GDN', 39)
+my_map.add_path('PNO', 'POZ', 48)
+my_map.add_path('GDN', 'POZ', 27)
+my_map.add_path('POZ', 'SZZ', 5)
+my_map.add_path('SZZ', 'KTW', 2)
+my_map.add_path('BZG', 'WAW', 15)
+my_map.add_path('BZG', 'GDN', 25)
+
 routes = []
 
 
-@app.route('/')
+@app.route(app_url + '/')
 def hello_world():
-    return 'Welcome to the PathFinder app!'
+    return 'Welcome to the PathFinder web app!'
 
 #@app.route(app_url + '/cities', methods=['GET'])
 #def get_cities():
@@ -117,7 +138,7 @@ def create_new_route():
 @app.route(app_url + '/r/<uid>')
 def get_route(uid):
 
-    print routes
+    #print routes
 
     for route_item in routes:
         for key in route_item:
@@ -132,14 +153,13 @@ def get_route(uid):
 
 
 if __name__ == '__main__':
-    my_map = WorldMap()
 
     # cities = ['WAW', 'PNO', 'KRK', 'GDN', 'POZ', 'SZZ', 'KTW']
-
+    '''
     for city in cities:
         for key in city:
             if key == "id":
-                #print city[key]
+                print city[key]
                 my_map.add_city(city[key])
 
     # for city in cities:
@@ -158,5 +178,6 @@ if __name__ == '__main__':
 
     #print "Najlepsza droga: ", best_path
     #print "Waga połączenia: %d" % weight
+    '''
+    app.run(host='0.0.0.0')
 
-    app.run()
