@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from collections import defaultdict, deque
 from flask import Flask, render_template, request, abort, make_response
 from uuid import uuid4
 import json
@@ -66,7 +65,10 @@ def create_new_route():
         print "Start: " + start
         print "End: " + end
 
-        best_route, distance = getShortestPath(my_map, "KTW", "WAW")
+        try:
+            best_route, distance = getShortestPath(my_map, start, end)
+        except TypeError:
+            abort(400)
 
         new_route = {"id": str(uuid4()), "route": best_route, "weight": distance}
         routes.append(new_route)
@@ -75,6 +77,7 @@ def create_new_route():
         response.headers['Location'] = app_url + '/r/' + new_route['id']
         return response
 
+'''
     if request.method == 'POST':
 
         print "METHOD POST"
@@ -95,7 +98,10 @@ def create_new_route():
             print "Start: " + arguments.get('from')
             print "End: " + arguments.get('to')
 
-            best_route, distance = getShortestPath(my_map, "KTW", "WAW")
+            try:
+                best_route, distance = getShortestPath(my_map, "KTW", "WAW")
+            except TypeError:
+                abort(400)
 
             new_route = {"id": str(uuid4()), "route": best_route, "weight": distance}
             routes.append(new_route)
@@ -106,7 +112,7 @@ def create_new_route():
             return response
         except ValueError, e:
             abort(400)
-
+'''
 
 @app.route(app_url + '/r/<uid>')
 def get_route(uid):
@@ -124,6 +130,7 @@ def get_route(uid):
 
     return "Przykro mi, ale trasa: " + uid + " nie istnieje :("
 
+
 if __name__ == '__main__':
     my_map = WorldMap()
 
@@ -132,7 +139,7 @@ if __name__ == '__main__':
     for city in cities:
         for key in city:
             if key == "id":
-                print city[key]
+                #print city[key]
                 my_map.add_city(city[key])
 
     # for city in cities:
@@ -147,9 +154,9 @@ if __name__ == '__main__':
     my_map.add_path('POZ', 'SZZ', 5)
     my_map.add_path('SZZ', 'KTW', 2)
 
-    best_path, weight = getShortestPath(my_map, "KTW", "WAW")
+    #best_path, weight = getShortestPath(my_map, "KTW", "WAW")
 
-    print "Najlepsza droga: ", best_path
-    print "Waga połączenia: %d" % weight
+    #print "Najlepsza droga: ", best_path
+    #print "Waga połączenia: %d" % weight
 
     app.run()
