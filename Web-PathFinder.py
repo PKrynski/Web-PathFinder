@@ -20,6 +20,7 @@ cities = [
     {'id': 'ELK', 'name': 'Ełk'},
     {'id': 'GDN', 'name': 'Gdańsk'},
     {'id': 'KTW', 'name': 'Katowice'},
+    {'id': 'KIE', 'name': 'Kielce'},
     {'id': 'KOS', 'name': 'Koszalin'},
     {'id': 'KRK', 'name': 'Kraków'},
     {'id': 'LUB', 'name': 'Lublin'},
@@ -48,9 +49,11 @@ my_map.add_path('WAW', 'OLS', 214)
 my_map.add_path('WAW', 'LCJ', 130)
 my_map.add_path('WAW', 'RAD', 104)
 my_map.add_path('RAD', 'LUB', 116)
-my_map.add_path('RAD', 'KRK', 193)
+my_map.add_path('RAD', 'KIE', 78)
+my_map.add_path('KIE', 'KRK', 116)
 my_map.add_path('KRK', 'KTW', 78)
 my_map.add_path('KTW', 'CZE', 74)
+my_map.add_path('CZE', 'LCJ', 124)
 my_map.add_path('KTW', 'OPO', 108)
 my_map.add_path('OPO', 'WRO', 94)
 my_map.add_path('WRO', 'POZ', 173)
