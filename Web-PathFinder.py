@@ -14,14 +14,23 @@ app.debug = True
 app.wsgi_app = DebuggedApplication(app.wsgi_app, True)
 
 cities = [
-    {'id': 'WAW', 'name': 'Warszawa'},
-    {'id': 'PNO', 'name': 'Piaseczno'},
-    {'id': 'KRK', 'name': 'Kraków'},
-    {'id': 'GDN', 'name': 'Gdańsk'},
-    {'id': 'POZ', 'name': 'Poznań'},
+    {'id': 'BIA', 'name': 'Białystok'},
     {'id': 'BZG', 'name': 'Bydgoszcz'},
-    {'id': 'SZZ', 'name': 'Szczecin'},
+    {'id': 'CZE', 'name': 'Częstochowa'},
+    {'id': 'ELK', 'name': 'Ełk'},
+    {'id': 'GDN', 'name': 'Gdańsk'},
     {'id': 'KTW', 'name': 'Katowice'},
+    {'id': 'KOS', 'name': 'Koszalin'},
+    {'id': 'KRK', 'name': 'Kraków'},
+    {'id': 'LUB', 'name': 'Lublin'},
+    {'id': 'LCJ', 'name': 'Łódź'},
+    {'id': 'OLS', 'name': 'Olsztyn'},
+    {'id': 'OPO', 'name': 'Opole'},
+    {'id': 'POZ', 'name': 'Poznań'},
+    {'id': 'RAD', 'name': 'Radom'},
+    {'id': 'WAW', 'name': 'Warszawa'},
+    {'id': 'WRO', 'name': 'Wrocław'},
+    {'id': 'SZZ', 'name': 'Szczecin'}
 ]
 
 my_map = WorldMap()
@@ -34,16 +43,29 @@ for city in cities:
 # for city in cities:
 #    my_map.add_city(city)
 
-my_map.add_path('WAW', 'PNO', 22)
-my_map.add_path('WAW', 'KRK', 24)
-my_map.add_path('PNO', 'GDN', 13)
-my_map.add_path('KRK', 'GDN', 39)
-my_map.add_path('PNO', 'POZ', 48)
-my_map.add_path('GDN', 'POZ', 27)
-my_map.add_path('POZ', 'SZZ', 5)
-my_map.add_path('SZZ', 'KTW', 2)
-my_map.add_path('BZG', 'WAW', 15)
-my_map.add_path('BZG', 'GDN', 25)
+my_map.add_path('WAW', 'BIA', 197)
+my_map.add_path('WAW', 'OLS', 214)
+my_map.add_path('WAW', 'LCJ', 130)
+my_map.add_path('WAW', 'RAD', 104)
+my_map.add_path('RAD', 'LUB', 116)
+my_map.add_path('RAD', 'KRK', 193)
+my_map.add_path('KRK', 'KTW', 78)
+my_map.add_path('KTW', 'CZE', 74)
+my_map.add_path('KTW', 'OPO', 108)
+my_map.add_path('OPO', 'WRO', 94)
+my_map.add_path('WRO', 'POZ', 173)
+my_map.add_path('POZ', 'LCJ', 218)
+my_map.add_path('POZ', 'SZZ', 264)
+my_map.add_path('POZ', 'BZG', 142)
+my_map.add_path('SZZ', 'BZG', 257)
+my_map.add_path('SZZ', 'KOS', 161)
+my_map.add_path('KOS', 'GDN', 187)
+my_map.add_path('GDN', 'BZG', 167)
+my_map.add_path('GDN', 'OLS', 160)
+my_map.add_path('OLS', 'ELK', 153)
+my_map.add_path('ELK', 'BIA', 107)
+my_map.add_path('BIA', 'LUB', 246)
+my_map.add_path('BZG', 'LCJ', 217)
 
 routes = []
 
