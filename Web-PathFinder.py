@@ -87,7 +87,7 @@ def get_cities():
     return json.dumps(cities)
 
 
-@app.route(app_url + '/routes', methods=['GET'])        #TODO: change to POST
+@app.route(app_url + '/routes', methods=['GET','POST'])
 def create_new_route():
 
     #print "TUTAJ JEST CREATE"
