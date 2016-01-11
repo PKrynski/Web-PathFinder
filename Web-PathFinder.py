@@ -87,7 +87,7 @@ def get_cities():
     return json.dumps(cities)
 
 
-@app.route(app_url + '/routes', methods=['GET'])
+@app.route(app_url + '/routes', methods=['GET'])        #TODO: change to POST
 def create_new_route():
 
     #print "TUTAJ JEST CREATE"
@@ -113,11 +113,50 @@ def create_new_route():
         response.headers['Location'] = app_url + '/r/' + new_route['id']
         return response
 
+    if request.method == 'POST':
+
+        print "METHOD POST"
+
+        data = request.get_data()
+
+        print data
+
+        try:
+            arguments = json.loads(data)
+            if arguments.get('from') is None:
+                abort(400)
+            if arguments.get('to') is None:
+                abort(400)
+            #import time
+            #time.sleep(3)
+
+            start = arguments.get('from')
+            end = arguments.get('to')
+
+            print "Start: " + start
+            print "End: " + end
+
+            try:
+                best_route, distance = getShortestPath(my_map, "KTW", "WAW")
+            except TypeError:
+                abort(400)
+
+            new_route = {"id": str(uuid4()), "route": best_route, "weight": distance}
+            routes.append(new_route)
+
+            response = make_response()
+            response.headers['Location'] = app_url + '/r/' + new_route['id']
+            # json.dumps({"status":"OK", "msg":"Wyliczono trasę"})
+            return response
+
+        except ValueError, e:
+            abort(400)
+
     abort(400)
 
 
 
-@app.route(app_url + '/r/<uid>')
+@app.route(app_url + '/r/<uid>')        #TODO: make same name as above
 def get_route(uid):
 
     #print routes
